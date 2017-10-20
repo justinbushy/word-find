@@ -1,0 +1,17 @@
+{
+  "name": "word-find",
+  "version": "1.0.0",
+  "description": "library to cheat at word-finding game",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Justin Bush",
+  "license": "ISC",
+  "preferGlobal": true,
+  "bin": {
+    "wordfind": "index.js"
+  },
+  "dependencies": {
+    "minimist": "^1.2.0"
+  }
+}
