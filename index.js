@@ -30,24 +30,27 @@ var filteredWords = Object.keys(words).filter(w => w.match(re));
 
 // then, filter by length if -l param present
 if(argv.l) {
-    console.log('has -l ' + argv.l);
     filteredWords = filteredWords.filter(w => w.length === argv.l);
 }
 
-// then, filter repeating letters
-// check all given characters and save which ones only occur once
-var singleChars = [];
+// then find number of occurences of each letter from -c param
+
+var charsObj = {};
 for(var j = 0; j < argv.c.length; j++) {
-    if((argv.c.split(argv.c[j]).length - 1) === 1) {
-        singleChars.push(argv.c[j]);
-    }
+    charsObj[argv.c[j]] = argv.c.split(argv.c[j]).length - 1;
 }
 
-// iterate over single characters and make sure they don't occur more than once
-// in filter
-for(i = 0; i < singleChars.length; i++) {
-    filteredWords = filteredWords.filter(w => (w.split(singleChars[i]).length - 1) <= 1);
+// filter by occurences of each letter to verify words don't contain too many
+// letters
+
+var singles = Object.keys(charsObj);
+for(i = 0; i < singles.length; i++) {
+    filteredWords = filteredWords.filter(
+        w => (w.split(singles[i]).length - 1) <= charsObj[singles[i]]);
 }
 
 // finally, print out found words
-console.log(filteredWords);
+console.log('Found ' + filteredWords.length + ' possible words:');
+for(i = 0; i < filteredWords.length; i++) {
+    console.log('\t' + filteredWords[i]);
+}
